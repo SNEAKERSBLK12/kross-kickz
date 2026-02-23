@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kross Kickz — Streetwear Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #080808;
+    --surface:  #111111;
+    --surface2: #191919;
+    --surface3: #222222;
+    --border:   #2a2a2a;
+    --border-r: #3a1010;
+    --accent:   #e8000a;
+    --accent2:  #ff4455;
+    --text:     #f2f2f2;
+    --text2:    #777777;
+    --text3:    #444444;
+    --profit:   #ff5050;
+    --glow:     rgba(232,0,10,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 230px;
+    background: #0c0c0c;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .logo {
+    padding: 18px 14px 14px;
+    border-bottom: 1px solid #1a0000;
+    background: #000;
+  }
+
+  .logo-img {
+    width: 100%;
+    max-width: 200px;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 12px rgba(232,0,10,0.6));
+  }
+
+  .logo-tagline {
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    color: #cc3333;
+    margin-top: 6px;
+    font-weight: 700;
+  }
+
+  .logo-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    font-size: 9px;
+    color: var(--text2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    margin-top: 2px;
+  }
+
+  .nav { padding: 12px 0; flex: 1; }
+
+  .nav-section {
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 16px 20px 6px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.2px;
+  }
+
+  .nav-item:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+    border-left-color: var(--border);
+  }
+
+  .nav-item.active {
+    color: #fff;
+    border-left-color: var(--accent);
+    background: rgba(232,0,10,0.08);
+    font-weight: 600;
+  }
+
+  .nav-item.active .nav-icon { filter: drop-shadow(0 0 6px var(--accent)); }
+
+  .nav-icon { font-size: 15px; width: 20px; text-align: center; }
+
+  .sidebar-bottom {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: #0a0a0a;
+  }
+
+  .plan-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    font-family: 'Oswald', sans-serif;
+    display: inline-block;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
+    padding-right: 16px;
+  }
+
+  /* ── MAIN ── */
+  .main { margin-left: 230px; min-height: 100vh; }
+
+  .topbar {
+    height: 62px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .page-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .topbar-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn {
+    padding: 9px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s;
+    text-transform: uppercase;
+  }
+
+  .btn-accent {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 18px rgba(232,0,10,0.35);
+  }
+  .btn-accent:hover {
+    background: #ff1a24;
+    box-shadow: 0 0 28px rgba(232,0,10,0.55);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .content { padding: 28px 32px; }
+
+  /* ── STAT CARDS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 22px 20px 18px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -20px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    opacity: 0.04;
+  }
+
+  .stat-card.green::before  { background: #ffffff; }
+  .stat-card.green::after   { background: #fff; }
+  .stat-card.yellow::before { background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  .stat-card.yellow::after  { background: var(--accent); }
+  .stat-card.blue::before   { background: #cc2222; }
+  .stat-card.blue::after    { background: #cc2222; }
+  .stat-card.orange::before { background: #ff5555; }
+  .stat-card.orange::after  { background: #ff5555; }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 10px;
+  }
+
+  .stat-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: 0px;
+    font-weight: 600;
+  }
+
+  .stat-card.green  .stat-value { color: #ffffff; }
+  .stat-card.yellow .stat-value { color: var(--accent); text-shadow: 0 0 20px rgba(232,0,10,0.4); }
+  .stat-card.blue   .stat-value { color: #cc2222; }
+  .stat-card.orange .stat-value { color: #ff5555; }
+
+  .stat-delta {
+    font-size: 10px;
+    color: var(--text2);
+    margin-top: 8px;
+    font-family: 'Space Mono', monospace;
+  }
+  .stat-delta span { color: #ff7777; }
+
+  /* ── LAYOUT ── */
+  .grid-2    { display: grid; grid-template-columns: 1fr 1fr;  gap: 18px; margin-bottom: 22px; }
+  .grid-3col { display: grid; grid-template-columns: 2fr 1fr;  gap: 18px; margin-bottom: 22px; }
+
+  /* ── PANELS ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.015);
+  }
+
+  .panel-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .badge {
+    font-size: 9px;
+    font-family: 'Space Mono', monospace;
+    padding: 3px 9px;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  .badge-yellow { background: rgba(232,0,10,0.1); color: var(--accent); border: 1px solid rgba(232,0,10,0.3); }
+  .badge-green  { background: rgba(255,255,255,0.06); color: #ccc; border: 1px solid rgba(255,255,255,0.15); }
+  .badge-blue   { background: rgba(255,255,255,0.04); color: #aaa; border: 1px solid rgba(255,255,255,0.1); }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left;
+    font-size: 8px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    font-family: 'Space Mono', monospace;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  td {
+    padding: 13px 18px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+  tr:hover td { background: rgba(232,0,10,0.03); }
+  tr:last-child td { border-bottom: none; }
+
+  .item-img {
+    width: 42px; height: 42px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .item-name { font-weight: 600; font-size: 13px; font-family: 'Inter', sans-serif; color: var(--text); }
+  .item-sku { font-size: 10px; color: var(--text2); font-family: 'Space Mono', monospace; margin-top: 3px; letter-spacing: 0.5px; }
+
+  .status-pill {
+    font-size: 8px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    display: inline-block;
+    font-weight: 700;
+  }
+
+  .status-active { background: rgba(232,0,10,0.1); color: var(--accent); border: 1px solid rgba(232,0,10,0.3); }
+  .status-sold   { background: rgba(255,255,255,0.06); color: #bbb; border: 1px solid rgba(255,255,255,0.2); }
+  .status-draft  { background: rgba(255,255,255,0.03); color: var(--text3); border: 1px solid var(--border); }
+  .status-listed { background: rgba(255,80,80,0.1); color: #ff8888; border: 1px solid rgba(255,80,80,0.3); }
+
+  .profit-pos { color: #ff5a5a; font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; }
+  .profit-neg { color: #444; font-family: 'Space Mono', monospace; font-size: 13px; }
+
+  .marketplace-icons { display: flex; gap: 4px; flex-wrap: wrap; }
+  .mp-tag {
+    font-size: 8px;
+    font-family: 'Space Mono', monospace;
+    padding: 2px 7px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    letter-spacing: 0.5px;
+  }
+
+  .action-btns { display: flex; gap: 5px; }
+  .action-btn {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    cursor: pointer; font-size: 12px;
+    transition: all 0.15s;
+    color: var(--text2);
+  }
+  .action-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(232,0,10,0.08); }
+
+  /* ── SCAN ── */
+  .scan-zone {
+    border: 2px dashed var(--border);
+    padding: 40px;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .scan-zone:hover { border-color: var(--accent); background: rgba(232,0,10,0.03); }
+  .scan-zone-icon  { font-size: 42px; margin-bottom: 12px; }
+  .scan-zone-title { font-family: 'Oswald', sans-serif; font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .scan-zone-sub   { font-size: 11px; color: var(--text2); font-family: 'Inter', sans-serif; }
+
+  /* ── AI RESULT ── */
+  .ai-result {
+    background: var(--surface2);
+    border: 1px solid rgba(232,0,10,0.25);
+    border-left: 3px solid var(--accent);
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .ai-result-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+
+  .ai-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+
+  .ai-field { margin-bottom: 10px; }
+  .ai-field-label { font-size: 8px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; font-family: 'Space Mono', monospace; }
+  .ai-field-value { font-size: 14px; font-weight: 600; margin-top: 3px; font-family: 'Inter', sans-serif; }
+
+  .price-range { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+
+  .price-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 10px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .price-box:hover { border-color: rgba(232,0,10,0.3); }
+  .price-box-label { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); font-family: 'Space Mono', monospace; }
+  .price-box-val   { font-family: 'Oswald', sans-serif; font-size: 28px; margin-top: 6px; font-weight: 600; }
+  .price-box.rec   { border-color: var(--accent); background: rgba(232,0,10,0.05); }
+  .price-box.rec .price-box-val { color: var(--accent); text-shadow: 0 0 20px rgba(232,0,10,0.4); }
+
+  /* ── ACTIVITY ── */
+  .activity-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center; gap: 12px;
+    transition: background 0.15s;
+  }
+  .activity-item:hover { background: rgba(255,255,255,0.02); }
+  .activity-item:last-child { border-bottom: none; }
+
+  .activity-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; }
+  .dot-green  { background: #ffffff; box-shadow: 0 0 6px #fff; }
+  .dot-yellow { background: var(--accent); box-shadow: 0 0 8px rgba(232,0,10,0.7); }
+  .dot-blue   { background: #ff7777; box-shadow: 0 0 6px rgba(255,100,100,0.5); }
+
+  .activity-text { font-size: 12px; flex: 1; color: var(--text2); line-height: 1.5; }
+  .activity-text strong { font-weight: 600; color: var(--text); }
+  .activity-time { font-size: 10px; color: var(--text3); font-family: 'Space Mono', monospace; white-space: nowrap; }
+
+  /* ── PROGRESS ── */
+  .progress-wrap { margin-bottom: 15px; }
+  .progress-top  { display: flex; justify-content: space-between; margin-bottom: 7px; }
+  .progress-name { font-size: 12px; font-weight: 500; color: var(--text); }
+  .progress-val  { font-size: 11px; font-family: 'Space Mono', monospace; color: var(--text2); }
+  .progress-bar  { height: 3px; background: var(--surface3); border-radius: 2px; }
+  .progress-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    width: 560px;
+    max-height: 88vh;
+    overflow-y: auto;
+    transform: translateY(12px);
+    transition: transform 0.25s;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.7), 0 0 40px rgba(232,0,10,0.1);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .modal-title { font-family: 'Oswald', sans-serif; font-size: 20px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .modal-close { cursor: pointer; color: var(--text2); font-size: 20px; background: none; border: none; transition: color 0.15s; }
+  .modal-close:hover { color: var(--accent); }
+
+  .modal-body { padding: 24px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text2); font-family: 'Space Mono', monospace;
+    display: block; margin-bottom: 7px; font-weight: 700;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 13px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(232,0,10,0.1); }
+  .form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  textarea.form-input { resize: vertical; min-height: 80px; }
+
+  .marketplace-select { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .mp-option {
+    border: 1px solid var(--border);
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    color: var(--text2);
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .mp-option:hover  { border-color: var(--text3); color: var(--text); background: rgba(255,255,255,0.03); }
+  .mp-option.selected { border-color: var(--accent); background: rgba(232,0,10,0.08); color: #fff; }
+  .mp-icon { font-size: 20px; display: block; margin-bottom: 5px; }
+
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 10px; justify-content: flex-end;
+    background: rgba(255,255,255,0.01);
+  }
+
+  /* ── TABS ── */
+  .tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 20px; background: rgba(255,255,255,0.01); }
+  .tab {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 13px 16px;
+    cursor: pointer;
+    color: var(--text2);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    font-weight: 700;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── CHART ── */
+  .chart-area {
+    height: 150px;
+    position: relative;
+    padding: 0 20px 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+  }
+  .bar-group { flex: 1; display: flex; gap: 2px; align-items: flex-end; }
+  .bar {
+    flex: 1; min-height: 4px; position: relative;
+    transition: height 0.5s ease;
+    border-radius: 1px 1px 0 0;
+  }
+  .bar:hover { filter: brightness(1.3); }
+  .bar:hover::after {
+    content: attr(data-val);
+    position: absolute; top: -22px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px; font-family: 'Space Mono', monospace;
+    color: var(--text); white-space: nowrap;
+    background: var(--surface3); padding: 2px 6px;
+    border: 1px solid var(--border);
+  }
+  .chart-labels { display: flex; padding: 0 20px; gap: 5px; margin-bottom: 16px; }
+  .chart-label  { flex: 1; text-align: center; font-size: 9px; color: var(--text3); font-family: 'Space Mono', monospace; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 14px 20px;
+    font-size: 13px; z-index: 999;
+    transform: translateY(80px); opacity: 0;
+    transition: all 0.3s;
+    max-width: 320px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(232,0,10,0.1);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── SCAN PAGE ── */
+  .scan-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .scan-preview {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    height: 290px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px; position: relative; overflow: hidden;
+  }
+  .scan-preview .scanning-line {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scan 1.5s ease-in-out infinite;
+    display: none;
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes scan    { 0%{top:0} 100%{top:100%} }
+  @keyframes pulse   { 0%,100%{opacity:1} 50%{opacity:0.35} }
+  @keyframes fadeIn  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes slideIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+
+  .pulse   { animation: pulse 2s infinite; }
+  .fade-in { animation: fadeIn 0.35s forwards; }
+
+  .scanning .scanning-line { display: block; }
+  .scanning .scan-emoji    { opacity: 0.2; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .grid-3col, .scan-stage { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="logo" style="border-bottom:1px solid #2a0000;box-shadow:0 4px 20px rgba(232,0,10,0.15);">
+    <div style="text-align:center;padding:4px 0 2px;">
+      <!-- Shield emblem -->
+      <svg width="160" height="100" viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Shield background -->
+        <polygon points="80,6 148,20 148,62 80,96 12,62 12,20" fill="#0a0000" stroke="#e8000a" stroke-width="2.5"/>
+        <polygon points="80,11 143,24 143,60 80,91 17,60 17,24" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+        <!-- X mark top center -->
+        <line x1="72" y1="9" x2="88" y2="23" stroke="#e8000a" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="88" y1="9" x2="72" y2="23" stroke="#e8000a" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="72" y1="9" x2="88" y2="23" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        <line x1="88" y1="9" x2="72" y2="23" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        <!-- Stars -->
+        <text x="22" y="50" fill="#e8000a" font-size="10" text-anchor="middle">★</text>
+        <text x="138" y="50" fill="#e8000a" font-size="10" text-anchor="middle">★</text>
+        <!-- KROSS text -->
+        <text x="80" y="50" fill="white" font-family="Bebas Neue, Arial Black, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="2">KROSS</text>
+        <text x="80" y="50" fill="none" stroke="#e8000a" stroke-width="0.5" font-family="Bebas Neue, Arial Black, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="2">KROSS</text>
+        <!-- Red bar -->
+        <rect x="22" y="54" width="116" height="14" fill="#e8000a" rx="1"/>
+        <!-- KICKZ-N-STREETWEAR text -->
+        <text x="80" y="65" fill="white" font-family="Bebas Neue, Arial Black, sans-serif" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="1.5">KICKZ-N-STREETWEAR</text>
+        <!-- Sneaker silhouette hint -->
+        <ellipse cx="80" cy="82" rx="36" ry="7" fill="none" stroke="white" stroke-width="1" opacity="0.3"/>
+        <path d="M44,82 Q62,74 80,76 Q98,74 116,82" fill="none" stroke="white" stroke-width="1.2" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="logo-tagline">⚡ Pressure Creates Power</div>
+  </div>
+  <div class="nav">
+    <div class="nav-section" style="color:#333;border-top:none;">Main</div>
+    <div class="nav-item active" onclick="showPage('dashboard')">
+      <span class="nav-icon">⚡</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('scan')">
+      <span class="nav-icon">📷</span> Scan & Price
+    </div>
+    <div class="nav-item" onclick="showPage('inventory')">
+      <span class="nav-icon">📦</span> Inventory
+    </div>
+    <div class="nav-item" onclick="showPage('listings')">
+      <span class="nav-icon">🏪</span> Listings
+    </div>
+    <div class="nav-section">Finance</div>
+    <div class="nav-item" onclick="showPage('financials')">
+      <span class="nav-icon">💰</span> P&L Report
+    </div>
+    <div class="nav-item" onclick="showPage('sold')">
+      <span class="nav-icon">✅</span> Sold Items
+    </div>
+    <div class="nav-section">Settings</div>
+    <div class="nav-item">
+      <span class="nav-icon">🔗</span> Marketplaces
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">⚙️</span> Preferences
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="plan-badge">KROSS PRO</div>
+    <div style="font-size:10px;color:var(--text2);margin-top:10px;font-family:'Space Mono',monospace;letter-spacing:0.5px;">7 platforms connected</div>
+    <div style="margin-top:8px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);"></div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar" style="box-shadow:0 1px 0 rgba(232,0,10,0.3),0 4px 20px rgba(0,0,0,0.5);">
+    <div class="page-title" id="page-title">Dashboard</div>
+    <div class="topbar-actions">
+      <div style="font-size:8px;color:var(--text2);font-family:'Space Mono',monospace;letter-spacing:1.5px;text-align:right;line-height:1.8;margin-right:8px;text-transform:uppercase;">Kross Kickz-N-Streetwear<br><span style="color:var(--accent);font-weight:700;letter-spacing:2px;">⚡ Command Center</span></div>
+      <button class="btn btn-ghost" onclick="showPage('scan')">📷 Scan Item</button>
+      <button class="btn btn-accent" onclick="openModal('add-item')">+ Add Item</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD PAGE -->
+    <div class="page active" id="page-dashboard">
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-label">Net Profit (MTD)</div>
+          <div class="stat-value">$4,820</div>
+          <div class="stat-delta">This month <span style="color:#ff8888">↑ 18% vs last month</span></div>
+        </div>
+        <div class="stat-card yellow" style="box-shadow:0 0 0 0 transparent;transition:all 0.25s;">
+          <div class="stat-label">Active Inventory</div>
+          <div class="stat-value">143</div>
+          <div class="stat-delta">Items across all platforms</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Revenue (MTD)</div>
+          <div class="stat-value">$12,340</div>
+          <div class="stat-delta">47 items sold this month</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-label">Avg Margin</div>
+          <div class="stat-value">39%</div>
+          <div class="stat-delta">COGS: $7,520 this month</div>
+        </div>
+      </div>
+
+      <!-- CHART + ACTIVITY -->
+      <div class="grid-3col">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Sales Performance</div>
+            <div class="badge badge-yellow">Last 8 Weeks</div>
+          </div>
+          <div style="padding:16px 20px 0;display:flex;gap:16px;">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);">
+              <div style="width:10px;height:10px;background:var(--accent)"></div> Revenue
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);">
+              <div style="width:10px;height:10px;background:#ffffff"></div> Profit
+            </div>
+          </div>
+          <div class="chart-area" id="chart-area">
+          </div>
+          <div class="chart-labels" id="chart-labels"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Recent Activity</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-green"></div>
+            <div class="activity-text"><strong>Jordan 1 Retro High OG</strong> sold on StockX for $312</div>
+            <div class="activity-time">2m ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-yellow"></div>
+            <div class="activity-text"><strong>iPhone 14 Pro 256GB</strong> listed on 3 platforms</div>
+            <div class="activity-time">18m ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-blue"></div>
+            <div class="activity-text">AI priced <strong>PS5 Console Bundle</strong> at $489</div>
+            <div class="activity-time">1h ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-green"></div>
+            <div class="activity-text"><strong>Louis Vuitton Neverfull MM</strong> sold on eBay for $940</div>
+            <div class="activity-time">3h ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-yellow"></div>
+            <div class="activity-text">New item scanned: <strong>Nike Dunk Low Panda</strong></div>
+            <div class="activity-time">4h ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-green"></div>
+            <div class="activity-text"><strong>MacBook Pro M2</strong> sold on Facebook for $1,100</div>
+            <div class="activity-time">6h ago</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARKETPLACE PERFORMANCE -->
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Marketplace Performance</div>
+            <div class="badge badge-blue">MTD</div>
+          </div>
+          <div style="padding:20px;">
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">eBay</span><span class="progress-val">$4,820 · 19 sales</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:78%;background:var(--accent)"></div></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">StockX</span><span class="progress-val">$3,240 · 12 sales</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:52%;background:#cc0000"></div></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">Facebook Marketplace</span><span class="progress-val">$2,100 · 9 sales</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:34%;background:#ff6666"></div></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">Mercari</span><span class="progress-val">$1,440 · 6 sales</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:23%;background:rgba(255,255,255,0.45)"></div></div>
+            </div>
+            <div class="progress-wrap" style="margin-bottom:0">
+              <div class="progress-top"><span class="progress-name">Poshmark</span><span class="progress-val">$740 · 3 sales</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:12%;background:rgba(255,255,255,0.2)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Category Breakdown</div>
+          </div>
+          <div style="padding:20px;">
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">👟 Sneakers</span><span class="progress-val">42% · $5,183</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:42%;background:var(--accent)"></div></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">📱 Electronics</span><span class="progress-val">31% · $3,825</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:31%;background:#cc0000"></div></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-top"><span class="progress-name">👜 Luxury Goods</span><span class="progress-val">18% · $2,221</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:18%;background:#ff6666"></div></div>
+            </div>
+            <div class="progress-wrap" style="margin-bottom:0">
+              <div class="progress-top"><span class="progress-name">🎮 Gaming</span><span class="progress-val">9% · $1,111</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:9%;background:rgba(255,255,255,0.4)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCAN PAGE -->
+    <div class="page" id="page-scan">
+      <div class="scan-stage">
+        <div class="scan-left">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">📷 Photo Scan</div>
+              <div class="badge badge-yellow">AI-Powered</div>
+            </div>
+            <div style="padding:20px;">
+              <div class="scan-preview" id="scan-preview">
+                <span class="scan-emoji">📦</span>
+                <div class="scanning-line"></div>
+              </div>
+              <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <button class="btn btn-accent" style="width:100%" onclick="simulateScan()">📷 Snap Photo</button>
+                <button class="btn btn-ghost" style="width:100%" onclick="document.getElementById('file-input').click()">📂 Upload Image</button>
+              </div>
+              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileUpload(event)">
+              <div style="margin-top:12px;padding:12px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2);text-align:center;font-family:'Space Mono',monospace;">
+                AI will identify item, check market value & suggest pricing
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scan-right">
+          <div class="panel" id="ai-panel">
+            <div class="panel-header">
+              <div class="panel-title">AI Analysis</div>
+              <div class="badge badge-green pulse" id="ai-status">WAITING</div>
+            </div>
+            <div style="padding:20px;" id="ai-content">
+              <div style="text-align:center;padding:40px 0;color:var(--text2);">
+                <div style="font-size:36px;margin-bottom:12px;">🤖</div>
+                <div style="font-size:13px;">Scan an item to see AI analysis</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVENTORY PAGE -->
+    <div class="page" id="page-inventory">
+      <div class="panel" style="margin-bottom:20px;">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'inv-all')">All Items (143)</div>
+          <div class="tab" onclick="switchTab(this,'inv-active')">Active (89)</div>
+          <div class="tab" onclick="switchTab(this,'inv-listed')">Listed (38)</div>
+          <div class="tab" onclick="switchTab(this,'inv-draft')">Drafts (16)</div>
+        </div>
+        <div style="padding:12px 20px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--border);">
+          <input class="form-input" style="max-width:280px;" placeholder="Search inventory..." type="text">
+          <select class="form-input" style="max-width:160px;">
+            <option>All Categories</option>
+            <option>Sneakers</option>
+            <option>Electronics</option>
+            <option>Luxury</option>
+            <option>Gaming</option>
+          </select>
+          <select class="form-input" style="max-width:160px;">
+            <option>All Platforms</option>
+            <option>eBay</option>
+            <option>StockX</option>
+            <option>Mercari</option>
+          </select>
+        </div>
+        <div class="tab-content active" id="inv-all">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Item</th>
+                  <th>Cost</th>
+                  <th>List Price</th>
+                  <th>Est. Profit</th>
+                  <th>Platforms</th>
+                  <th>Status</th>
+                  <th>Days Listed</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="inventory-tbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-content" id="inv-active"><div style="padding:40px;text-align:center;color:var(--text2)">Active inventory filter view</div></div>
+        <div class="tab-content" id="inv-listed"><div style="padding:40px;text-align:center;color:var(--text2)">Listed items filter view</div></div>
+        <div class="tab-content" id="inv-draft"><div style="padding:40px;text-align:center;color:var(--text2)">Draft items filter view</div></div>
+      </div>
+    </div>
+
+    <!-- LISTINGS PAGE -->
+    <div class="page" id="page-listings">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🏪 Listing Builder</div>
+          <button class="btn btn-accent" onclick="openModal('build-listing')">Build New Listing</button>
+        </div>
+        <div style="padding:40px;text-align:center;color:var(--text2)">
+          <div style="font-size:48px;margin-bottom:16px;">🏪</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:24px;margin-bottom:8px;color:var(--text);">Auto-Listing Engine</div>
+          <div style="max-width:400px;margin:0 auto;font-size:13px;line-height:1.7;">
+            Select any inventory item and FlipOS will auto-generate an optimized title, description, and photos — then push it live to eBay, Mercari, Facebook, StockX, and Poshmark simultaneously.
+          </div>
+          <button class="btn btn-accent" style="margin-top:24px;" onclick="openModal('build-listing')">Select Item to List</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCIALS PAGE -->
+    <div class="page" id="page-financials">
+      <div class="stats-grid" style="margin-bottom:24px;">
+        <div class="stat-card green">
+          <div class="stat-label">Total Revenue (YTD)</div>
+          <div class="stat-value">$84,230</div>
+          <div class="stat-delta">Across all platforms</div>
+        </div>
+        <div class="stat-card yellow" style="box-shadow:0 0 0 0 transparent;transition:all 0.25s;">
+          <div class="stat-label">Total COGS (YTD)</div>
+          <div class="stat-value">$51,840</div>
+          <div class="stat-delta">Sourcing + fees</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Gross Profit (YTD)</div>
+          <div class="stat-value">$32,390</div>
+          <div class="stat-delta">Before expenses</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-label">Net Margin</div>
+          <div class="stat-value">38.5%</div>
+          <div class="stat-delta">After all fees</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">P&L Breakdown by Month</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th><th>Revenue</th><th>COGS</th><th>Platform Fees</th><th>Gross Profit</th><th>Margin</th><th>Items Sold</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>February 2026</td><td>$12,340</td><td>$6,820</td><td>$700</td><td class="profit-pos">$4,820</td><td class="profit-pos">39%</td><td>47</td></tr>
+              <tr><td>January 2026</td><td>$10,480</td><td>$5,920</td><td>$600</td><td class="profit-pos">$3,960</td><td class="profit-pos">37.8%</td><td>41</td></tr>
+              <tr><td>December 2025</td><td>$14,820</td><td>$8,100</td><td>$840</td><td class="profit-pos">$5,880</td><td class="profit-pos">39.7%</td><td>63</td></tr>
+              <tr><td>November 2025</td><td>$11,200</td><td>$6,400</td><td>$640</td><td class="profit-pos">$4,160</td><td class="profit-pos">37.1%</td><td>52</td></tr>
+              <tr><td>October 2025</td><td>$9,840</td><td>$5,700</td><td>$560</td><td class="profit-pos">$3,580</td><td class="profit-pos">36.4%</td><td>38</td></tr>
+              <tr><td>September 2025</td><td>$8,920</td><td>$5,200</td><td>$510</td><td class="profit-pos">$3,210</td><td class="profit-pos">36%</td><td>34</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOLD PAGE -->
+    <div class="page" id="page-sold">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">✅ Sold Inventory</div>
+          <div class="badge badge-green">Auto-Filed on Sale</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Item</th><th>Cost Paid</th><th>Sold Price</th><th>Platform</th><th>Fees</th><th>Net Profit</th><th>Sold Date</th></tr>
+            </thead>
+            <tbody id="sold-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ADD ITEM MODAL -->
+<div class="modal-overlay" id="modal-add-item">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add Inventory Item</div>
+      <button class="modal-close" onclick="closeModal('add-item')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Item Name</label>
+        <input class="form-input" placeholder="e.g. Nike Air Jordan 1 Retro High OG Chicago">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">SKU / Ref</label>
+          <input class="form-input" placeholder="Auto-generated">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input">
+            <option>Sneakers</option><option>Electronics</option><option>Luxury Goods</option><option>Gaming</option><option>Clothing</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Cost Paid ($)</label>
+          <input class="form-input" type="number" placeholder="0.00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">List Price ($)</label>
+          <input class="form-input" type="number" placeholder="0.00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Condition</label>
+          <select class="form-input">
+            <option>New</option><option>Like New</option><option>Good</option><option>Fair</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-input" placeholder="Size, color, box condition, etc."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">List On Marketplaces</label>
+        <div class="marketplace-select">
+          <div class="mp-option selected" onclick="this.classList.toggle('selected')"><span class="mp-icon">🛒</span>eBay</div>
+          <div class="mp-option" onclick="this.classList.toggle('selected')"><span class="mp-icon">👟</span>StockX</div>
+          <div class="mp-option selected" onclick="this.classList.toggle('selected')"><span class="mp-icon">📘</span>Facebook</div>
+          <div class="mp-option" onclick="this.classList.toggle('selected')"><span class="mp-icon">🛍️</span>Mercari</div>
+          <div class="mp-option" onclick="this.classList.toggle('selected')"><span class="mp-icon">🌸</span>Poshmark</div>
+          <div class="mp-option" onclick="this.classList.toggle('selected')"><span class="mp-icon">🟠</span>OfferUp</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('add-item')">Cancel</button>
+      <button class="btn btn-accent" onclick="addItem()">Save to Inventory</button>
+    </div>
+  </div>
+</div>
+
+<!-- BUILD LISTING MODAL -->
+<div class="modal-overlay" id="modal-build-listing">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Build Listing</div>
+      <button class="modal-close" onclick="closeModal('build-listing')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="ai-result">
+        <div class="ai-result-header">
+          <div class="ai-badge">AI GENERATED</div>
+          <div style="font-size:12px;color:var(--text2)">Jordan 1 Retro High OG "Chicago" 2022</div>
+        </div>
+        <div class="ai-field">
+          <div class="ai-field-label">Optimized Title</div>
+          <div class="ai-field-value" style="font-size:13px;">Nike Air Jordan 1 Retro High OG "Chicago" 2022 Sz 10 DS 555088-101</div>
+        </div>
+        <div class="ai-field">
+          <div class="ai-field-label">Auto-Generated Description</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-top:4px;">
+            100% Authentic Nike Air Jordan 1 Retro High OG "Chicago" 2022. Deadstock condition, never worn, original box included. Size US 10 (fits true to size). SKU: 555088-101. Ships within 24 hours in double-boxed packaging...
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <label class="form-label">Push to Platforms</label>
+        <div class="marketplace-select">
+          <div class="mp-option selected" onclick="this.classList.toggle('selected')"><span class="mp-icon">🛒</span>eBay</div>
+          <div class="mp-option selected" onclick="this.classList.toggle('selected')"><span class="mp-icon">👟</span>StockX</div>
+          <div class="mp-option selected" onclick="this.classList.toggle('selected')"><span class="mp-icon">📘</span>Facebook</div>
+          <div class="mp-option" onclick="this.classList.toggle('selected')"><span class="mp-icon">🛍️</span>Mercari</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('build-listing')">Cancel</button>
+      <button class="btn btn-accent" onclick="publishListing()">🚀 Push Live</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toast-icon">✅</span>
+  <span id="toast-msg">Item saved to inventory</span>
+</div>
+
+<script>
+  // DATA
+  const inventoryData = [
+    { emoji:'👟', name:'Jordan 1 Retro High OG Chicago', sku:'JD-001', cost:180, price:520, platforms:['eBay','StockX'], status:'listed', days:3 },
+    { emoji:'📱', name:'iPhone 14 Pro 256GB Deep Purple', sku:'TK-042', cost:650, price:920, platforms:['eBay','FB'], status:'listed', days:1 },
+    { emoji:'🎮', name:'PS5 Console + Controller Bundle', sku:'GM-017', cost:380, price:489, platforms:['FB','Mercari'], status:'active', days:7 },
+    { emoji:'👜', name:'Louis Vuitton Neverfull MM Damier', sku:'LX-008', cost:580, price:1050, platforms:['eBay','Poshmark'], status:'listed', days:5 },
+    { emoji:'👟', name:'Nike Dunk Low Panda', sku:'JD-055', cost:90, price:175, platforms:['eBay'], status:'draft', days:0 },
+    { emoji:'💻', name:'MacBook Air M2 13" 256GB', sku:'TK-061', cost:820, price:1100, platforms:['eBay','FB'], status:'active', days:14 },
+    { emoji:'👟', name:'Yeezy Boost 350 V2 Zebra', sku:'JD-033', cost:140, price:290, platforms:['StockX','eBay'], status:'listed', days:2 },
+    { emoji:'🎮', name:'Nintendo Switch OLED White', sku:'GM-029', cost:220, price:310, platforms:['FB','Mercari'], status:'active', days:9 },
+  ];
+
+  const soldData = [
+    { emoji:'👟', name:'Jordan 1 Retro High OG Chicago', cost:180, sold:520, platform:'StockX', fees:47, profit:293 },
+    { emoji:'👜', name:'Louis Vuitton Neverfull MM', cost:580, sold:940, platform:'eBay', fees:85, profit:275 },
+    { emoji:'💻', name:'MacBook Pro M2 13"', cost:920, sold:1100, platform:'Facebook', fees:0, profit:180 },
+    { emoji:'📱', name:'Samsung Galaxy S24 Ultra', cost:540, sold:780, platform:'eBay', fees:70, profit:170 },
+    { emoji:'👟', name:'Nike Air Max 90 "Infrared"', cost:85, sold:210, platform:'Mercari', fees:25, profit:100 },
+  ];
+
+  // RENDER INVENTORY
+  function renderInventory() {
+    const tbody = document.getElementById('inventory-tbody');
+    tbody.innerHTML = inventoryData.map((item, i) => {
+      const profit = item.price - item.cost;
+      const margin = Math.round((profit/item.price)*100);
+      const statusClass = { listed:'status-listed', active:'status-active', draft:'status-draft' }[item.status];
+      return `
+        <tr class="fade-in" style="animation-delay:${i*0.04}s">
+          <td><div class="item-img">${item.emoji}</div></td>
+          <td>
+            <div class="item-name">${item.name}</div>
+            <div class="item-sku">${item.sku}</div>
+          </td>
+          <td><span style="font-family:'Space Mono',monospace">$${item.cost}</span></td>
+          <td><span style="font-family:'Space Mono',monospace;color:#ff7777">$${item.price}</span></td>
+          <td><span class="profit-pos">$${profit} <span style="font-size:10px;opacity:0.7">(${margin}%)</span></span></td>
+          <td>
+            <div class="marketplace-icons">
+              ${item.platforms.map(p=>`<span class="mp-tag">${p}</span>`).join('')}
+            </div>
+          </td>
+          <td><span class="status-pill ${statusClass}">${item.status}</span></td>
+          <td><span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--text2)">${item.days > 0 ? item.days+'d' : '—'}</span></td>
+          <td>
+            <div class="action-btns">
+              <div class="action-btn" title="Edit">✏️</div>
+              <div class="action-btn" title="List" onclick="showToast('📤','Listing pushed to all platforms!')">📤</div>
+              <div class="action-btn" title="Mark Sold" onclick="markSold(${i})">✅</div>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  // RENDER SOLD
+  function renderSold() {
+    const tbody = document.getElementById('sold-tbody');
+    tbody.innerHTML = soldData.map((item, i) => `
+      <tr class="fade-in" style="animation-delay:${i*0.05}s">
+        <td>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="item-img">${item.emoji}</div>
+            <div>${item.name}</div>
+          </div>
+        </td>
+        <td style="font-family:'Space Mono',monospace">$${item.cost}</td>
+        <td style="font-family:'Space Mono',monospace;color:#ff6666">$${item.sold}</td>
+        <td><span class="mp-tag">${item.platform}</span></td>
+        <td style="font-family:'Space Mono',monospace;color:var(--text2)">-$${item.fees}</td>
+        <td><span class="profit-pos">+$${item.profit}</span></td>
+        <td style="font-size:11px;color:var(--text2);font-family:'Space Mono',monospace">${['Feb 23','Feb 22','Feb 20','Feb 19','Feb 17'][i]}</td>
+      </tr>`).join('');
+  }
+
+  // CHART
+  function renderChart() {
+    const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8'];
+    const revenue = [2100,2800,3200,2700,3800,4200,3600,4800];
+    const profit = [800,1100,1250,1000,1500,1700,1400,1900];
+    const maxV = Math.max(...revenue);
+
+    const area = document.getElementById('chart-area');
+    const labels = document.getElementById('chart-labels');
+
+    area.innerHTML = revenue.map((r,i) => `
+      <div class="bar-group">
+        <div class="bar" style="height:${(profit[i]/maxV)*100}%;background:#ffffff;opacity:0.7" data-val="$${profit[i]}"></div>
+        <div class="bar" style="height:${(r/maxV)*100}%;background:var(--accent);opacity:0.8" data-val="$${r}"></div>
+      </div>`).join('');
+
+    labels.innerHTML = weeks.map(w=>`<div class="chart-label">${w}</div>`).join('');
+  }
+
+  // PAGE NAV
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    document.getElementById('page-'+id).classList.add('active');
+
+    const titles = { dashboard:'Dashboard', scan:'Scan & Price', inventory:'Inventory Hub', listings:'Listing Builder', financials:'P&L Report', sold:'Sold Inventory' };
+    document.getElementById('page-title').textContent = titles[id] || id;
+
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(n => {
+      if(n.textContent.toLowerCase().includes(id.substring(0,4))) n.classList.add('active');
+    });
+
+    if(id==='inventory') renderInventory();
+    if(id==='sold') renderSold();
+  }
+
+  // TABS
+  function switchTab(el, contentId) {
+    const parent = el.closest('.panel');
+    parent.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    parent.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(contentId).classList.add('active');
+  }
+
+  // MODAL
+  function openModal(id) {
+    document.getElementById('modal-'+id).classList.add('open');
+  }
+
+  function closeModal(id) {
+    document.getElementById('modal-'+id).classList.remove('open');
+  }
+
+  // TOAST
+  function showToast(icon, msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-icon').textContent = icon;
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 3000);
+  }
+
+  // ADD ITEM
+  function addItem() {
+    closeModal('add-item');
+    showToast('✅', 'Item saved to inventory!');
+  }
+
+  function publishListing() {
+    closeModal('build-listing');
+    showToast('🚀', 'Listing pushed live to 3 platforms!');
+  }
+
+  function markSold(i) {
+    showToast('✅', `"${inventoryData[i].name}" marked as SOLD & filed!`);
+  }
+
+  // SCAN SIMULATION
+  function simulateScan() {
+    const preview = document.getElementById('scan-preview');
+    const status = document.getElementById('ai-status');
+    const content = document.getElementById('ai-content');
+
+    preview.classList.add('scanning');
+    status.textContent = 'SCANNING...';
+    status.className = 'badge badge-yellow pulse';
+    content.innerHTML = `<div style="text-align:center;padding:40px 0;color:var(--text2)"><div style="font-size:36px;margin-bottom:12px" class="pulse">🤖</div><div>Analyzing image...</div></div>`;
+
+    setTimeout(()=>{
+      preview.classList.remove('scanning');
+      preview.innerHTML = '<span style="font-size:64px">👟</span><div class="scanning-line"></div>';
+      status.textContent = 'COMPLETE';
+      status.className = 'badge badge-green';
+
+      content.innerHTML = `
+        <div class="fade-in">
+          <div class="ai-result">
+            <div class="ai-result-header">
+              <div class="ai-badge">AI IDENTIFIED</div>
+              <div style="font-size:11px;color:#ff7777;font-family:'Space Mono',monospace;font-weight:700">✓ 98.4% confidence</div>
+            </div>
+            <div class="ai-field">
+              <div class="ai-field-label">Identified Item</div>
+              <div class="ai-field-value">Nike Air Jordan 1 Retro High OG "Chicago" 2022</div>
+            </div>
+            <div class="ai-field">
+              <div class="ai-field-label">SKU / Style Code</div>
+              <div class="ai-field-value" style="font-family:'Space Mono',monospace;font-size:13px">555088-101 · Size 10</div>
+            </div>
+            <div class="ai-field">
+              <div class="ai-field-label">Condition Assessment</div>
+              <div class="ai-field-value" style="color:#ffffff">Deadstock — 9.8/10</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);font-family:'Space Mono',monospace;margin-bottom:8px">Market Pricing Data · Last 30 Days</div>
+            <div class="price-range">
+              <div class="price-box">
+                <div class="price-box-label">Low</div>
+                <div class="price-box-val" style="color:var(--text2)">$440</div>
+              </div>
+              <div class="price-box rec">
+                <div class="price-box-label">🎯 Aggressive</div>
+                <div class="price-box-val">$499</div>
+              </div>
+              <div class="price-box">
+                <div class="price-box-label">High</div>
+                <div class="price-box-val" style="color:var(--accent3)">$580</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:10px;background:rgba(232,0,10,0.07);border:1px solid rgba(232,0,10,0.2);font-size:11px;color:var(--text2)">
+            💡 <strong style="color:#ff7777">AI Tip:</strong> 12 comps sold in last 7 days on StockX. Demand is high. Price at $499–$520 for fast sale at strong margin.
+          </div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button class="btn btn-accent" onclick="openModal('add-item')">Add to Inventory</button>
+            <button class="btn btn-ghost" onclick="openModal('build-listing')">Build Listing</button>
+          </div>
+        </div>`;
+    }, 2200);
+  }
+
+  function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if(!file) return;
+    const preview = document.getElementById('scan-preview');
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover"><div class="scanning-line"></div>`;
+      simulateScan();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // CLOSE MODAL ON BG CLICK
+  document.querySelectorAll('.modal-overlay').forEach(o => {
+    o.addEventListener('click', e => { if(e.target===o) o.classList.remove('open'); });
+  });
+
+  // INIT
+  renderChart();
+</script>
+</body>
+</html>
